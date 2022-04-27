@@ -1,8 +1,8 @@
 package com.karakaya.car.service.entity;
 
-import com.karakaya.car.service.enums.GearType;
-import com.karakaya.car.service.enums.VehicleColor;
-import com.karakaya.car.service.enums.VehicleType;
+import com.karakaya.car.service.enums.Gear;
+import com.karakaya.car.service.enums.Color;
+import com.karakaya.car.service.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +28,6 @@ import javax.persistence.Table;
 public class Car extends BaseEntity
 {
 
-
     @Id
     private Long id;
 
@@ -38,9 +37,9 @@ public class Car extends BaseEntity
 
     private Long modelYear;
 
-    private VehicleType vehicleType;
+    private Type type;
 
-    private GearType gearType;
+    private Gear gear;
 
-    private VehicleColor vehicleColor;
+    private Color color;
 }

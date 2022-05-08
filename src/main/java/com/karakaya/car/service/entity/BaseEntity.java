@@ -21,7 +21,7 @@ public abstract class BaseEntity implements Serializable
     @CreationTimestamp
     private OffsetDateTime createdDate;
 
-    @Column(name = "updated_date", nullable = false,  columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "updated_date", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @UpdateTimestamp
     private OffsetDateTime updatedDate;
 

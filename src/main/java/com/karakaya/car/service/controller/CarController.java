@@ -19,7 +19,7 @@ import java.util.List;
  * Created by TCOKARAKAYA on 8.05.2022.
  */
 @RestController
-@RequestMapping("api/car")
+@RequestMapping("api/car-service")
 @RequiredArgsConstructor
 @Slf4j
 public class CarController
@@ -40,7 +40,7 @@ public class CarController
                 .build();
     }
 
-    @GetMapping("/get-cars/{brand}")
+    @GetMapping("/getByBrand/{brand}")
     public ApiResponse<List<CarResponse>> getCarsByBrand(@PathVariable String brand)
     {
         log.info("getCarsByBrand called with: {}", brand);
@@ -54,7 +54,7 @@ public class CarController
                 .build();
     }
 
-    @GetMapping("/get-car/{id}")
+    @GetMapping("/getById/{id}")
     public ApiResponse<CarResponse> getCarById(@PathVariable Long id)
     {
         log.info("getCarsById called with: {}", id);

@@ -27,4 +27,5 @@ public class CarResponse
     private Type type;
     private Gear gear;
     private Color color;
+    private Long price;
 }

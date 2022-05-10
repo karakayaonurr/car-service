@@ -21,4 +21,5 @@ public class CarCreateRequest
     private Type type;
     private Gear gear;
     private Color color;
+    private Long price;
 }

@@ -11,3 +11,16 @@ CREATE TABLE car
     "type"       int4 NULL,
     CONSTRAINT car_pkey PRIMARY KEY (id)
 );
+
+CREATE TABLE projectcars.users
+(
+    id        bigserial NOT NULL,
+    address   varchar(255) NULL,
+    birh_year int8 NULL,
+    budget    int8 NULL,
+    gender    int4 NULL,
+    gsm_no    varchar(255) NULL,
+    "name"    varchar(255) NULL,
+    surname   varchar(255) NULL,
+    CONSTRAINT users_pkey PRIMARY KEY (id)
+);

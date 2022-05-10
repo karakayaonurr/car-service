@@ -1,8 +1,6 @@
 package com.karakaya.car.service.entity;
 
-import com.karakaya.car.service.enums.Color;
-import com.karakaya.car.service.enums.Gear;
-import com.karakaya.car.service.enums.Type;
+import com.karakaya.car.service.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created by TCOKARAKAYA on 27.04.2022.
+ * Created by TCOKARAKAYA on 9.05.2022.
  */
 @Getter
 @Setter
@@ -25,26 +23,25 @@ import javax.persistence.Table;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "car")
+@Table(name = "users")
 @ToString
-public class Car extends BaseEntity
+public class User
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String brand;
+    private String name;
 
-    private String model;
+    private String surname;
 
-    private Long modelYear;
+    private Long birhYear;
 
-    private Type type;
+    private Gender gender;
 
-    private Gear gear;
+    private String address;
 
-    private Color color;
+    private String gsmNo;
 
-    private Long price;
+    private Long budget;
 }

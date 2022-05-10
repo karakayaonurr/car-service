@@ -34,6 +34,7 @@ public class CarServiceImpl implements CarService
                 .model(request.getModel())
                 .modelYear(request.getModelYear())
                 .type(request.getType())
+                .price(request.getPrice())
                 .build());
 
         log.info("Car saved successfully: {}", car);
@@ -45,6 +46,7 @@ public class CarServiceImpl implements CarService
                 .model(car.getModel())
                 .modelYear(car.getModelYear())
                 .type(car.getType())
+                .price(request.getPrice())
                 .build();
     }
 
@@ -65,6 +67,7 @@ public class CarServiceImpl implements CarService
                         .model(car.getModel())
                         .modelYear(car.getModelYear())
                         .type(car.getType())
+                        .price(car.getPrice())
                         .build();
 
                 carResponseList.add(carResponse);
@@ -98,8 +101,11 @@ public class CarServiceImpl implements CarService
                     .model(carPresent.getModel())
                     .modelYear(carPresent.getModelYear())
                     .type(carPresent.getType())
+                    .price(carPresent.getPrice())
                     .build();
-        } else {
+        }
+        else
+        {
             return new CarResponse();
         }
     }

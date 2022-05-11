@@ -1,6 +1,7 @@
 package com.karakaya.car.service.entity;
 
 import com.karakaya.car.service.enums.Gender;
+import com.karakaya.car.service.model.response.UserResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +14,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by TCOKARAKAYA on 9.05.2022.
@@ -25,7 +29,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Table(name = "users")
 @ToString
-public class User
+public class User extends BaseEntity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +39,7 @@ public class User
 
     private String surname;
 
-    private Long birhYear;
+    private Long birthYear;
 
     private Gender gender;
 
@@ -43,5 +47,21 @@ public class User
 
     private String gsmNo;
 
-    private Long budget;
+    private BigDecimal budget;
+
+    public static UserResponse toUserResponse(User user) {
+        return UserResponse.builder()
+                .name(user.getName())
+                .surname(user.getSurname())
+                .birthYear(user.getBirthYear())
+                .gender(user.getGender())
+                .address(user.getAddress())
+                .gsmNo(user.getGsmNo())
+                .budget(user.getBudget())
+                .build();
+    }
+
+    public static List<UserResponse> toUserResponseList (List<User> userList){
+        return userList.stream().map(User::toUserResponse).collect(Collectors.toList());
+    };
 }

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 /**
  * Created by TCOKARAKAYA on 8.05.2022.
  */
@@ -21,5 +23,5 @@ public class CarCreateRequest
     private Type type;
     private Gear gear;
     private Color color;
-    private Long price;
+    private BigDecimal price;
 }

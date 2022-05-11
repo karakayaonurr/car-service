@@ -39,15 +39,8 @@ public class CarServiceImpl implements CarService
 
         log.info("Car saved successfully: {}", car);
 
-        return CarResponse.builder()
-                .brand(car.getBrand())
-                .color(car.getColor())
-                .gear(car.getGear())
-                .model(car.getModel())
-                .modelYear(car.getModelYear())
-                .type(car.getType())
-                .price(request.getPrice())
-                .build();
+        return Car.toCarResponse(car);
+
     }
 
     @Override
@@ -57,25 +50,9 @@ public class CarServiceImpl implements CarService
 
         if (!carList.isEmpty())
         {
-            List<CarResponse> carResponseList = new ArrayList<>();
-
-            carList.forEach(car -> {
-                CarResponse carResponse = CarResponse.builder()
-                        .brand(car.getBrand())
-                        .color(car.getColor())
-                        .gear(car.getGear())
-                        .model(car.getModel())
-                        .modelYear(car.getModelYear())
-                        .type(car.getType())
-                        .price(car.getPrice())
-                        .build();
-
-                carResponseList.add(carResponse);
-            });
-
             log.info("Cars found: {}", carList);
 
-            return carResponseList;
+            return Car.toCarResponseList(carList);
         }
         else
         {
@@ -94,15 +71,7 @@ public class CarServiceImpl implements CarService
 
             log.info("Cars found: {}", carPresent);
 
-            return CarResponse.builder()
-                    .brand(carPresent.getBrand())
-                    .color(carPresent.getColor())
-                    .gear(carPresent.getGear())
-                    .model(carPresent.getModel())
-                    .modelYear(carPresent.getModelYear())
-                    .type(carPresent.getType())
-                    .price(carPresent.getPrice())
-                    .build();
+            return Car.toCarResponse(carPresent);
         }
         else
         {

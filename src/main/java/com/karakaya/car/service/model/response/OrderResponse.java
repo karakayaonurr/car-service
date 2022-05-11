@@ -1,8 +1,7 @@
 package com.karakaya.car.service.model.response;
 
-import com.karakaya.car.service.enums.Color;
-import com.karakaya.car.service.enums.Gear;
-import com.karakaya.car.service.enums.Type;
+import com.karakaya.car.service.entity.Car;
+import com.karakaya.car.service.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,9 +10,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
- * Created by TCOKARAKAYA on 8.05.2022.
+ * Created by TCOKARAKAYA on 11.05.2022.
  */
 @Getter
 @Setter
@@ -21,13 +21,9 @@ import java.math.BigDecimal;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CarResponse
+public class OrderResponse
 {
-    private String brand;
-    private String model;
-    private Long modelYear;
-    private Type type;
-    private Gear gear;
-    private Color color;
     private BigDecimal price;
+    private UserResponse user;
+    private List<CarResponse> carList;
 }

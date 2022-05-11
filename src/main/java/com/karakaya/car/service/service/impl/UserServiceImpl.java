@@ -1,9 +1,7 @@
 package com.karakaya.car.service.service.impl;
 
-import com.karakaya.car.service.entity.Car;
 import com.karakaya.car.service.entity.User;
 import com.karakaya.car.service.model.request.UserCreateRequest;
-import com.karakaya.car.service.model.response.CarResponse;
 import com.karakaya.car.service.model.response.UserResponse;
 import com.karakaya.car.service.repository.UserRepository;
 import com.karakaya.car.service.service.UserService;
@@ -11,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +31,7 @@ public class UserServiceImpl implements UserService
         User user = userRepository.save(User.builder()
                 .name(request.getName())
                 .surname(request.getSurname())
-                .birhYear(request.getBirhYear())
+                .birthYear(request.getBirthYear())
                 .gender(request.getGender())
                 .address(request.getAddress())
                 .gsmNo(request.getGsmNo())
@@ -44,7 +43,7 @@ public class UserServiceImpl implements UserService
         return UserResponse.builder()
                 .name(user.getName())
                 .surname(user.getSurname())
-                .birhYear(user.getBirhYear())
+                .birthYear(user.getBirthYear())
                 .gender(user.getGender())
                 .address(user.getAddress())
                 .gsmNo(user.getGsmNo())
@@ -59,25 +58,9 @@ public class UserServiceImpl implements UserService
 
         if (!userList.isEmpty())
         {
-            List<UserResponse> userResponseList = new ArrayList<>();
-
-            userList.forEach(user -> {
-                UserResponse userResponse = UserResponse.builder()
-                        .name(user.getName())
-                        .surname(user.getSurname())
-                        .birhYear(user.getBirhYear())
-                        .gender(user.getGender())
-                        .address(user.getAddress())
-                        .gsmNo(user.getGsmNo())
-                        .budget(user.getBudget())
-                        .build();
-
-                userResponseList.add(userResponse);
-            });
-
             log.info("Users found: {}", userList);
 
-            return userResponseList;
+            return User.toUserResponseList(userList);
         }
         else
         {
@@ -96,15 +79,7 @@ public class UserServiceImpl implements UserService
 
             log.info("Users found: {}", userPresent);
 
-            return UserResponse.builder()
-                    .name(userPresent.getName())
-                    .surname(userPresent.getSurname())
-                    .birhYear(userPresent.getBirhYear())
-                    .gender(userPresent.getGender())
-                    .address(userPresent.getAddress())
-                    .gsmNo(userPresent.getGsmNo())
-                    .budget(userPresent.getBudget())
-                    .build();
+           return User.toUserResponse(userPresent);
         }
         else
         {

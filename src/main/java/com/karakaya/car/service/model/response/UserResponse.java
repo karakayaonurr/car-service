@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 /**
  * Created by TCOKARAKAYA on 9.05.2022.
  */
@@ -21,9 +23,9 @@ public class UserResponse
 {
     private String name;
     private String surname;
-    private Long birhYear;
+    private Long birthYear;
     private Gender gender;
     private String address;
     private String gsmNo;
-    private Long budget;
+    private BigDecimal budget;
 }

@@ -3,6 +3,7 @@ package com.karakaya.car.service.service;
 import com.karakaya.car.service.model.request.UserCreateRequest;
 import com.karakaya.car.service.model.response.UserResponse;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**

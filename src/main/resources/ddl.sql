@@ -4,7 +4,7 @@
 
 -- DROP TABLE projectcars.car;
 
-CREATE TABLE projectcars.car
+CREATE TABLE car
 (
     id           bigserial   NOT NULL,
     created_date timestamptz NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE projectcars.car
 
 -- DROP TABLE projectcars.users;
 
-CREATE TABLE projectcars.users
+CREATE TABLE users
 (
     id         bigserial NOT NULL,
     address    varchar(255) NULL,
@@ -44,7 +44,7 @@ CREATE TABLE projectcars.users
 
 -- DROP TABLE projectcars.orders;
 
-CREATE TABLE projectcars.orders
+CREATE TABLE orders
 (
     id         bigserial NOT NULL,
     price      numeric(19, 2) NULL,

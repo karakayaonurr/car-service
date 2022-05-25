@@ -1,6 +1,8 @@
 package com.karakaya.car.service.service.impl;
 
 import com.karakaya.car.service.entity.Car;
+import com.karakaya.car.service.exception.CarAlreadyExistsException;
+import com.karakaya.car.service.exception.CarNotFoundException;
 import com.karakaya.car.service.model.request.CarCreateRequest;
 import com.karakaya.car.service.model.response.CarResponse;
 import com.karakaya.car.service.repository.CarRepository;
@@ -9,10 +11,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static com.karakaya.car.service.exception.ApiErrorType.CAR_EXISTS_ERROR;
+import static com.karakaya.car.service.exception.ApiErrorType.CAR_NOT_FOUND_ERROR;
 
 /**
  * Created by TCOKARAKAYA on 8.05.2022.
@@ -27,6 +30,15 @@ public class CarServiceImpl implements CarService
     @Override
     public CarResponse createCar(CarCreateRequest request)
     {
+        Optional<Car> carCheck = carRepository.findByBrandAndModelAndModelYearAndTypeAndGearAndColor(request.getBrand(), request.getModel(),
+                request.getModelYear(), request.getType(), request.getGear(), request.getColor());
+
+        if (carCheck.isEmpty()) {
+            throw new CarAlreadyExistsException(CAR_EXISTS_ERROR.getErrorCode(),
+                    CAR_EXISTS_ERROR.getErrorMessage(),
+                    CAR_EXISTS_ERROR.getHttpStatus());
+        }
+
         Car car = carRepository.save(Car.builder()
                 .brand(request.getBrand())
                 .color(request.getColor())
@@ -56,7 +68,9 @@ public class CarServiceImpl implements CarService
         }
         else
         {
-            return Collections.emptyList();
+            throw new CarNotFoundException(CAR_NOT_FOUND_ERROR.getErrorCode(),
+                    CAR_NOT_FOUND_ERROR.getErrorMessage(),
+                    CAR_NOT_FOUND_ERROR.getHttpStatus());
         }
     }
 
@@ -75,7 +89,9 @@ public class CarServiceImpl implements CarService
         }
         else
         {
-            return new CarResponse();
+            throw new CarNotFoundException(CAR_NOT_FOUND_ERROR.getErrorCode(),
+                    CAR_NOT_FOUND_ERROR.getErrorMessage(),
+                    CAR_NOT_FOUND_ERROR.getHttpStatus());
         }
     }
 

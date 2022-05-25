@@ -1,6 +1,9 @@
 package com.karakaya.car.service.service.impl;
 
 import com.karakaya.car.service.entity.User;
+import com.karakaya.car.service.exception.CarAlreadyExistsException;
+import com.karakaya.car.service.exception.UserAlreadyExistsException;
+import com.karakaya.car.service.exception.UserNotFoundException;
 import com.karakaya.car.service.model.request.UserCreateRequest;
 import com.karakaya.car.service.model.response.UserResponse;
 import com.karakaya.car.service.repository.UserRepository;
@@ -9,11 +12,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static com.karakaya.car.service.exception.ApiErrorType.CAR_EXISTS_ERROR;
+import static com.karakaya.car.service.exception.ApiErrorType.USER_EXISTS_ERROR;
+import static com.karakaya.car.service.exception.ApiErrorType.USER_NOT_FOUND_ERROR;
 
 /**
  * Created by TCOKARAKAYA on 9.05.2022.
@@ -28,6 +32,15 @@ public class UserServiceImpl implements UserService
     @Override
     public UserResponse createUser(UserCreateRequest request)
     {
+        Optional<User> userCheck = userRepository.findByNameAndSurnameAndBirthYearAndGenderAndGsmNo(request.getName(),
+                request.getSurname(),request.getBirthYear(),request.getGender(),request.getGsmNo());
+
+        if (userCheck.isEmpty()) {
+            throw new UserAlreadyExistsException(USER_EXISTS_ERROR.getErrorCode(),
+                    USER_EXISTS_ERROR.getErrorMessage(),
+                    USER_EXISTS_ERROR.getHttpStatus());
+        }
+
         User user = userRepository.save(User.builder()
                 .name(request.getName())
                 .surname(request.getSurname())
@@ -64,7 +77,9 @@ public class UserServiceImpl implements UserService
         }
         else
         {
-            return Collections.emptyList();
+            throw new UserNotFoundException(USER_NOT_FOUND_ERROR.getErrorCode(),
+                    USER_NOT_FOUND_ERROR.getErrorMessage(),
+                    USER_NOT_FOUND_ERROR.getHttpStatus());
         }
     }
 
@@ -83,7 +98,9 @@ public class UserServiceImpl implements UserService
         }
         else
         {
-            return new UserResponse();
+            throw new UserNotFoundException(USER_NOT_FOUND_ERROR.getErrorCode(),
+                    USER_NOT_FOUND_ERROR.getErrorMessage(),
+                    USER_NOT_FOUND_ERROR.getHttpStatus());
         }
     }
 }

@@ -3,6 +3,9 @@ package com.karakaya.car.service.service.impl;
 import com.karakaya.car.service.entity.Car;
 import com.karakaya.car.service.entity.Order;
 import com.karakaya.car.service.entity.User;
+import com.karakaya.car.service.exception.CarNotFoundException;
+import com.karakaya.car.service.exception.OrderNotFoundException;
+import com.karakaya.car.service.exception.UserNotFoundException;
 import com.karakaya.car.service.model.request.OrderCreateRequest;
 import com.karakaya.car.service.model.response.OrderResponse;
 import com.karakaya.car.service.model.response.UserResponse;
@@ -17,6 +20,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+
+import static com.karakaya.car.service.exception.ApiErrorType.CAR_NOT_FOUND_ERROR;
+import static com.karakaya.car.service.exception.ApiErrorType.USER_NOT_FOUND_ERROR;
 
 /**
  * Created by TCOKARAKAYA on 11.05.2022.
@@ -36,22 +42,27 @@ public class OrderServiceImpl implements OrderService
         Optional<User> user = userRepository.findById(request.getUserId());
         List<Car> carList = carRepository.findAllByIdIn(request.getCarIdList());
 
-        if (user.isPresent() && !carList.isEmpty())
-        {
-            User userPresent = user.get();
-
-            Order order = orderRepository.save(Order.builder()
-                    .user(userPresent)
-                    .carList(carList)
-                    .price(calculateOrderPrice(carList))
-                    .build());
-
-            return Order.toOrderResponse(order);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException(USER_NOT_FOUND_ERROR.getErrorCode(),
+                    USER_NOT_FOUND_ERROR.getErrorMessage(),
+                    USER_NOT_FOUND_ERROR.getHttpStatus());
         }
-        else
-        {
-            return new OrderResponse();
+
+        if (carList.isEmpty()) {
+            throw new CarNotFoundException(CAR_NOT_FOUND_ERROR.getErrorCode(),
+                    CAR_NOT_FOUND_ERROR.getErrorMessage(),
+                    CAR_NOT_FOUND_ERROR.getHttpStatus());
         }
+
+        User userPresent = user.get();
+
+        Order order = orderRepository.save(Order.builder()
+                .user(userPresent)
+                .carList(carList)
+                .price(calculateOrderPrice(carList))
+                .build());
+
+        return Order.toOrderResponse(order);
     }
 
     private BigDecimal calculateOrderPrice(List<Car> carList)
